@@ -63,11 +63,11 @@ var getRandomChars = function(alphabet, numChars) {
 
 // ---- Main ----
 var fs = require('fs');
+var FILE_NAMES = require('./fileNames');
 
 var DEFAULT_ALPHABET = CUSTOM_ALPHABETS.ALL_HIRAGANA;
 var NUM_LINES = 5;
 var LINE_LENGTH = 36;
-var OUTPUT_FILE_NAME = 'TYPINGPRACTICE.txt';
 
 // Set alphabet, based on input
 var alphabet = DEFAULT_ALPHABET;
@@ -96,4 +96,4 @@ output = output.join('\n\n\n');
 output += '\n';
 
 // Write to file
-fs.writeFileSync(OUTPUT_FILE_NAME, output);
+fs.writeFileSync(FILE_NAMES.TYPING_PRACTICE, output);

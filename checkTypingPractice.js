@@ -1,10 +1,8 @@
 var fs = require('fs');
-
-var INPUT_FILE_NAME = 'TYPINGPRACTICE.txt';
-var MISTAKES_FILE_NAME = 'MISTAKES.json';
+var FILE_NAMES = require('./fileNames');
 
 // Read contents from file
-var contents = fs.readFileSync(INPUT_FILE_NAME, 'utf-8');
+var contents = fs.readFileSync(FILE_NAMES.TYPING_PRACTICE, 'utf-8');
 var lines = contents.split('\n');
 
 // Record mistakes
@@ -51,10 +49,10 @@ for (var promptChar in mistakes) {
 
 // Record historical mistakes, creating file if necessary
 var historicalMistakes = {};
-if (fs.existsSync(MISTAKES_FILE_NAME)) {
-  historicalMistakes = JSON.parse(fs.readFileSync(MISTAKES_FILE_NAME));
+if (fs.existsSync(FILE_NAMES.MISTAKES_LOG)) {
+  historicalMistakes = JSON.parse(fs.readFileSync(FILE_NAMES.MISTAKES_LOG));
 }
 if (numMistakes < 15) {
   mergeMistakes(historicalMistakes, mistakes);
 }
-fs.writeFileSync(MISTAKES_FILE_NAME, JSON.stringify(historicalMistakes));
+fs.writeFileSync(FILE_NAMES.MISTAKES_LOG, JSON.stringify(historicalMistakes));
