@@ -37,7 +37,29 @@ var mergeMistakes = function(dest, source) {
   }
 };
 
+if (numMistakes > 15) {
+  console.log('High number of mistakes found...');
+  console.log('Are you sure you saved the file?');
+  return;
+}
+
+// Record historical mistakes, creating file if necessary
+var historicalMistakes = {};
+if (fs.existsSync(FILE_NAMES.MISTAKES_LOG)) {
+  historicalMistakes = JSON.parse(fs.readFileSync(FILE_NAMES.MISTAKES_LOG));
+}
+mergeMistakes(historicalMistakes, mistakes);
+fs.writeFileSync(FILE_NAMES.MISTAKES_LOG, JSON.stringify(historicalMistakes));
+
 // Print mistakes information to console
+console.log('ALL MISTAKES');
+for (var promptChar in historicalMistakes) {
+  for (var answerChar in historicalMistakes[promptChar]) {
+    console.log(promptChar, '-->', answerChar + ':', historicalMistakes[promptChar][answerChar]);
+  }
+}
+
+console.log('CURRENT MISTAKES');
 var percentAccuracy = Math.round((numTotal - numMistakes) * 10000 / numTotal) / 100;
 console.log('Number of mistakes:', numMistakes, '/', numTotal);
 console.log('          Accuracy:', percentAccuracy + '%')
@@ -46,13 +68,3 @@ for (var promptChar in mistakes) {
     console.log(promptChar, '-->', answerChar + ':', mistakes[promptChar][answerChar]);
   }
 }
-
-// Record historical mistakes, creating file if necessary
-var historicalMistakes = {};
-if (fs.existsSync(FILE_NAMES.MISTAKES_LOG)) {
-  historicalMistakes = JSON.parse(fs.readFileSync(FILE_NAMES.MISTAKES_LOG));
-}
-if (numMistakes < 15) {
-  mergeMistakes(historicalMistakes, mistakes);
-}
-fs.writeFileSync(FILE_NAMES.MISTAKES_LOG, JSON.stringify(historicalMistakes));
