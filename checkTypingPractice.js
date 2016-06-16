@@ -1,8 +1,13 @@
 var fs = require('fs');
 
-var contents = fs.readFileSync('TYPINGPRACTICE.txt', 'utf-8');
+var INPUT_FILE_NAME = 'TYPINGPRACTICE.txt';
+var MISTAKES_FILE_NAME = 'MISTAKES.json';
+
+// Read contents from file
+var contents = fs.readFileSync(INPUT_FILE_NAME, 'utf-8');
 var lines = contents.split('\n');
 
+// Record mistakes
 var mistakes = {};
 var numMistakes = 0;
 var numTotal = 0;
@@ -34,6 +39,7 @@ var mergeMistakes = function(dest, source) {
   }
 };
 
+// Print mistakes information to console
 var percentAccuracy = Math.round((numTotal - numMistakes) * 10000 / numTotal) / 100;
 console.log('Number of mistakes:', numMistakes, '/', numTotal);
 console.log('          Accuracy:', percentAccuracy + '%')
@@ -43,9 +49,12 @@ for (var promptChar in mistakes) {
   }
 }
 
-// Record historical mistakes
-var historicalMistakes = JSON.parse(fs.readFileSync('MISTAKES.json'));
+// Record historical mistakes, creating file if necessary
+var historicalMistakes = {};
+if (fs.existsSync(MISTAKES_FILE_NAME)) {
+  historicalMistakes = JSON.parse(fs.readFileSync(MISTAKES_FILE_NAME));
+}
 if (numMistakes < 15) {
   mergeMistakes(historicalMistakes, mistakes);
 }
-fs.writeFileSync('MISTAKES.json', JSON.stringify(historicalMistakes));
+fs.writeFileSync(MISTAKES_FILE_NAME, JSON.stringify(historicalMistakes));
