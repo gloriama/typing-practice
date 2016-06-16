@@ -1,28 +1,19 @@
-// Given an alphabet, outputs lines of random characters from it
-// to a file
+// ---- ALPHABETS ----
 
-// Usage: node generateTypingPractice.js <lesson number || name of custom alphabet>
-//   -lesson number: an integer from 1~15
-//   -name of custom alphabet: any key existing in CUSTOM_ALPHABETS (see below)
-
-// These alphabets conform to the introduction of new keys
-// from Touch Typing Tutor (http://www.typingme.com/touch-typing/typing-tutor.php)
 var LESSON_ALPHABETS = [
-  'ちとしは', // Lesson 1
-  'まのりれ', // 2 
-  '', // 3
-  'きく', // 4
-  'け', // 5
-  'ろ', // 6
-  'たていすか', // 7
-  'んなにらせ', // 8
-  'つさそひこ', // 9
-  'みもねるめ', // 10
-  'ぬふあうえ', // 11
-  'おやゆよわ', // 12
-  'ほ゜', // 13
-  '゛むへ', // 14
-  '' // 15
+  'ちとしは',   // Lesson 1 (Home keys, LH): asdf
+  'まのりれ',   // Lesson 2 (Home keys, RH): jkl;
+  'きく',      // Lesson 3 (Home row, index reach): gh
+  'けろ', 　　  // Lesson 4 (Home row, pinky reach): '
+  'たていすか', // Lesson 5 (Top row, LH): qwert
+  'んなにらせ', // Lesson 6 (Top row, RH): yuiop
+  '゛むへ',    // Lesson 7 (Top row, pinky reach): []\
+  'つさそひこ', // Lesson 8 (Bottom row, LH): zxcvb
+  'みもねるめ', // Lesson 9 (Bottom row, RH): nm,./
+  '、。・',    // Lesson 10 (Bottom row, RH Shift)
+  'ぬふあうえ', // Lesson 11 (Number row, LH): 12345
+  'おやゆよわ', // Lesson 12 (Number row, RH): 67890
+  'ほ゜'      // Lesson 13 (Number row, pinky reach): -=
 ];
 var CUSTOM_ALPHABETS = {
   RIGHT_PINKY: 'わほ゜せ゛むへれけろめ',
@@ -38,6 +29,18 @@ var CUSTOM_ALPHABETS = {
   'わを' +
   'ー'
 };
+
+
+// ---- OTHER DEFAULTS ----
+
+var fs = require('fs');
+var FILE_NAMES = require('./fileNames');
+var DEFAULT_ALPHABET = CUSTOM_ALPHABETS.ALL_HIRAGANA;
+var NUM_LINES = 5;
+var LINE_LENGTH = 36;
+
+
+// ---- HELPER FUNCTIONS ----
 
 // Returns a string of all characters introduced up to
 // (and including) the current lesson
@@ -61,13 +64,8 @@ var getRandomChars = function(alphabet, numChars) {
   return result;
 };
 
-// ---- Main ----
-var fs = require('fs');
-var FILE_NAMES = require('./fileNames');
 
-var DEFAULT_ALPHABET = CUSTOM_ALPHABETS.ALL_HIRAGANA;
-var NUM_LINES = 5;
-var LINE_LENGTH = 36;
+// ---- MAIN ----
 
 // Set alphabet, based on input
 var alphabet = DEFAULT_ALPHABET;
