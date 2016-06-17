@@ -17,7 +17,7 @@ var LESSON_ALPHABETS = [
 ];
 var CUSTOM_ALPHABETS = {
   RIGHT_PINKY: 'わほ゜せ゛むへれけろめ',
-  ALL_HIRAGANA: 'あいうえおぁぃぅぇ' +
+  ALL_HIRAGANA: 'あいうえおぁぃぅぇゔ' +
   'かきくけこがぎぐげご' +
   'さしすせそざじずぜぞ' +
   'たちつてとだぢづでどっ' +
@@ -27,7 +27,9 @@ var CUSTOM_ALPHABETS = {
   'やゆよゃゅょ' +
   'らりるれろ' +
   'わを' +
-  'ー'
+  'ー',
+  // CURRENT: 'けうぼぅむだぽびど'
+  CURRENT: 'けれうあほ゜とて゛むわ'
 };
 
 
@@ -49,17 +51,22 @@ var getAlphabetForLesson = function(lessonNumber) {
 };
 
 // Returns a random character from an alphabet string
-var getRandomChar = function(alphabet) {
+var getRandomChar = function(alphabet, charNotToMatch) {
   var randomIndex = Math.floor(Math.random() * alphabet.length);
   return alphabet[randomIndex];
 };
 
 // Returns a string of random characters from an alphabet
 // string, of length numChars
+// Does not allow repeated consecutive characters
 var getRandomChars = function(alphabet, numChars) {
   result = '';
+  var nextChar;
   for (var i = 0; i < numChars; i++) {
-    result += getRandomChar(alphabet);
+    while ((nextChar = getRandomChar(alphabet)) === result[i - 1]) {
+      // deliberately empty
+    }
+    result += nextChar;
   }
   return result;
 };
