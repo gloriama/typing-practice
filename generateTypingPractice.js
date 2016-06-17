@@ -90,6 +90,8 @@ if (alphabetArg !== undefined) {
       console.log('Invalid alphabet entered, defaulting to ALL_HIRAGANA alphabet');
     }
   }
+} else {
+  console.log('Defaulting to ALL_HIRAGANA alphabet');
 }
 
 // Generate random output
