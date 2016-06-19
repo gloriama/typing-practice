@@ -43,9 +43,9 @@ var converter = {
 var fs = require('fs');
 var contents = fs.readFileSync(INPUT_FILE_NAME, 'utf-8');
 
-var unknown = {};
-
-var sifted = contents.split('').map(function(char) {
+// Remove and/or convert characters as specified in
+// disallowedChars and converter (see above)
+var cleaned = contents.split('').map(function(char) {
   if (char in disallowedChars) {
     return '';
   } else {
@@ -53,12 +53,12 @@ var sifted = contents.split('').map(function(char) {
   }
 }).join('');
 
-// Standardize sifted characters into 36-char chunks
+// Standardize cleaned characters into 36-char chunks
 var LINE_LENGTH = 36;
 var output = '';
 
-for (var i = 0; i < sifted.length; i += LINE_LENGTH) {
-  output += sifted.slice(i, i + LINE_LENGTH) + '\n\n\n';
+for (var i = 0; i < cleaned.length; i += LINE_LENGTH) {
+  output += cleaned.slice(i, i + LINE_LENGTH) + '\n\n\n';
 }
 
 // Remove final newline
