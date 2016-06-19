@@ -4,12 +4,15 @@
 var INPUT_FILE_NAME = 'CONVERTER_INPUT.txt';
 var OUTPUT_FILE_NAME = 'CONVERTER_OUTPUT.txt';
 
-var disallowedChars = '';
-disallowedChars = disallowedChars.split('').reduce(function(acc, char) {
-  acc[char] = true;
-  return acc;
-}, {});
+var stringToSet = function(str) {
+  return str.split('').reduce(function(acc, char) {
+    acc[char] = true;
+    return acc;
+  }, {});
+};
 
+var disallowedChars = '\n';
+disallowedChars = stringToSet(disallowedChars);
 var converter = {
   '『': '',
   '』': '',
@@ -40,36 +43,14 @@ var converter = {
 var fs = require('fs');
 var contents = fs.readFileSync(INPUT_FILE_NAME, 'utf-8');
 
-// Needed since regular expressions cannot parse
-// non English characters
-var customSplit = function(str) {
-  var separators = {
-    '\n': true,
-    // '、': true,
-    // '。': true
-  };
-  var curr = '';
-  return str.split('').reduce(function(acc, char) {
-    if (char in separators) {
-      acc.push(curr);
-      curr = '';
-    } else {
-      curr += char;
-    }
-    return acc;
-  }, []);
-};
-var chunks = customSplit(contents);
 var unknown = {};
 
-var sifted = chunks.map(function(chunk) {
-  return chunk.split('').map(function(char) {
-    if (char in disallowedChars) {
-      return '';
-    } else {
-      return (char in converter) ? converter[char] : char;
-    }
-  }).join('');
+var sifted = contents.split('').map(function(char) {
+  if (char in disallowedChars) {
+    return '';
+  } else {
+    return (char in converter) ? converter[char] : char;
+  }
 }).join('');
 
 // Standardize sifted characters into 36-char chunks
