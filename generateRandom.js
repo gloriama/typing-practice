@@ -1,7 +1,7 @@
 // ---- HELPER FUNCTIONS ----
 
 // Returns a random character from an alphabet string
-var getRandomChar = function(alphabet, charNotToMatch) {
+var getRandomChar = function(alphabet) {
   var randomIndex = Math.floor(Math.random() * alphabet.length);
   return alphabet[randomIndex];
 };
