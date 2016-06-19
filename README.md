@@ -3,10 +3,24 @@
 This repo consists of simple scripts to help you improve your typing. The alphabets included are in Japanese, but they can easily be switched out for any custom set of characters in any language.
 
 ## Table of Contents
+1. [Quick start](#quick-start)
 1. [Usage](#usage)
-1. [Alphabet customization](#alphabet-customization)
+1. [Customization](#customization)
+
+## Quick start
+```
+git clone https://github.com/gloriama/typing-practice.git
+cd typing-practice
+node generate --random
+```
+Open `INPUT.txt` in any text editor, type each line directly below it, and save the file.
+```
+node check
+```
 
 ## Usage
+
+This is a more detailed documentation of the commands above.
 
 ### To generate characters to type:
 
@@ -43,9 +57,9 @@ This will print out your percent accuracy, as well as a list of specific mistake
 
 This script will also add your mistakes to a JSON file so that you can see a long-term log of your mistakes. This will help pinpoint which characters you should practice most.
 
-## Alphabet customization
+## Customization
 
-As mentioned, you can easily swap out the existing alphabets for any of your choosing. Simply edit the alphabet-related fields inside `config.js`.
+As mentioned, you can easily swap out the existing alphabets for any of your choosing. Simply edit the specified fields inside `config.js`.
 
 ### `generateRandom` alphabets
 
