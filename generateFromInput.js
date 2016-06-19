@@ -1,8 +1,6 @@
 // Converts input to something typeable in Macbook's
 // Japanese kana input keyboard
 
-var FILE_NAMES = require('./fileNames');
-
 var stringToHash = function(keys, values) {
   // keys and values are both strings of characters
   // must be the same length
@@ -16,44 +14,36 @@ var stringToHash = function(keys, values) {
   }, {});
 };
 
-// Specify disallowed characters and characters to convert
-var DISALLOWED = '\n＝';
-var CONVERT_FROM = '1234567890!@#$%^&*()『』[]`~～';
-var CONVERT_TO = '１２３４５６７８９０！＠＃＄％＾＆＊（）「」［］｀〜〜';
-
-// Convert to hashes
-var disallowed = stringToHash(DISALLOWED);
-var converter = stringToHash(CONVERT_FROM, CONVERT_TO);
-var fs = require('fs');
-var contents = fs.readFileSync(FILE_NAMES.INPUT, 'utf-8');
-
-var NUM_LINES = 5;
-var LINE_LENGTH = 36;
-var numCharsNeeded = NUM_LINES * LINE_LENGTH;
-
 // Remove and/or convert characters as specified in
 //   disallowed and converter (see above)
 // Continue until we have numCharsNeeded (or end of input)
-module.exports = function() {
+module.exports = function(fs, config) {
+  // Convert config data to hashes
+  var disallowed = stringToHash(config.DISALLOWED);
+  var converter = stringToHash(config.CONVERT_FROM, config.CONVERT_TO);
+  
+  // Remove and convert characters in input
+  // Stop once desired output size has been reached
+  var contents = fs.readFileSync(config.INPUT_FILE_NAME, 'utf-8');
   var lines = [];
   var currLine = '';
-  for (var i = 0; i < contents.length && lines.length < NUM_LINES; i++) {
+  for (var i = 0; i < contents.length && lines.length < config.NUM_LINES; i++) {
     var char = contents[i];
     if (char in disallowed) {
       continue;
     } else {
       currLine += char in converter ? converter[char] : char;
-      if (currLine.length === LINE_LENGTH || i === contents.length - 1) {
+      if (currLine.length === config.LINE_LENGTH || i === contents.length - 1) {
         lines.push(currLine + '\n');
         currLine = '';
       }
     }
   }
 
-  // Update FILE_NAMES.INPUT to be the remaining input
+  // Update input file to be the remaining input
   var remainingInput = contents.slice(i);
-  fs.writeFileSync(FILE_NAMES.INPUT, remainingInput);
+  fs.writeFileSync(config.INPUT_FILE_NAME, remainingInput);
 
-  // Write output to FILE_NAMES.TYPING_PRACTICE
-  fs.writeFileSync(FILE_NAMES.TYPING_PRACTICE, lines.join('\n\n'));
+  // Write output to output file
+  fs.writeFileSync(config.OUTPUT_FILE_NAME, lines.join('\n\n'));
 };

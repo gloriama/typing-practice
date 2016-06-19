@@ -1,8 +1,8 @@
 var fs = require('fs');
-var FILE_NAMES = require('./fileNames');
+var config = require('./config');
 
 // Read contents from file
-var contents = fs.readFileSync(FILE_NAMES.TYPING_PRACTICE, 'utf-8');
+var contents = fs.readFileSync(config.OUTPUT_FILE_NAME, 'utf-8');
 var lines = contents.split('\n');
 
 // Record mistakes
@@ -37,7 +37,7 @@ var mergeMistakes = function(dest, source) {
   }
 };
 
-if (numMistakes > 15) {
+if (numMistakes > config.MAX_NUM_MISTAKES) {
   console.log('High number of mistakes found...');
   console.log('Are you sure you saved the file?');
   return;
@@ -45,11 +45,11 @@ if (numMistakes > 15) {
 
 // Record historical mistakes, creating file if necessary
 var historicalMistakes = {};
-if (fs.existsSync(FILE_NAMES.MISTAKES_LOG)) {
-  historicalMistakes = JSON.parse(fs.readFileSync(FILE_NAMES.MISTAKES_LOG));
+if (fs.existsSync(config.MISTAKES_FILE_NAME)) {
+  historicalMistakes = JSON.parse(fs.readFileSync(config.MISTAKES_FILE_NAME));
 }
 mergeMistakes(historicalMistakes, mistakes);
-fs.writeFileSync(FILE_NAMES.MISTAKES_LOG, JSON.stringify(historicalMistakes));
+fs.writeFileSync(config.MISTAKES_FILE_NAME, JSON.stringify(historicalMistakes));
 
 // Print mistakes information to console
 console.log('ALL MISTAKES');

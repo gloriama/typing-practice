@@ -14,19 +14,18 @@ process.argv = [
 ]
 */
 
-var RANDOM_FLAG = '--random';
-var INPUT_FLAG = '--input';
-
+var fs = require('fs');
+var config = require('./config');
 var generateRandom = require('./generateRandom');
 var generateFromInput = require('./generateFromInput');
 
 var flag = process.argv[2];
 var alphabetChooser = process.argv[3];
 
-if (flag === RANDOM_FLAG) {
-  generateRandom(alphabetChooser);
-} else if (flag === INPUT_FLAG) {
-  generateFromInput();
+if (flag === config.RANDOM_FLAG) {
+  generateRandom(fs, config, alphabetChooser);
+} else if (flag === config.INPUT_FLAG) {
+  generateFromInput(fs, config);
 } else {
   console.log('Please supply a valid flag argument:', RANDOM_FLAG, 'or', INPUT_FLAG);
 }

@@ -1,54 +1,4 @@
-// ---- ALPHABETS ----
-
-var LESSON_ALPHABETS = [
-  'ちとしは',   // Lesson 1 (Home keys, LH): asdf
-  'まのりれ',   // Lesson 2 (Home keys, RH): jkl;
-  'きく',      // Lesson 3 (Home row, index reach): gh
-  'けろ', 　　  // Lesson 4 (Home row, pinky reach): '
-  'たていすか', // Lesson 5 (Top row, LH): qwert
-  'んなにらせ', // Lesson 6 (Top row, RH): yuiop
-  '゛むへ',    // Lesson 7 (Top row, pinky reach): []\
-  'つさそひこ', // Lesson 8 (Bottom row, LH): zxcvb
-  'みもねるめ', // Lesson 9 (Bottom row, RH): nm,./
-  '、。・',    // Lesson 10 (Bottom row, RH Shift)
-  'ぬふあうえ', // Lesson 11 (Number row, LH): 12345
-  'おやゆよわ', // Lesson 12 (Number row, RH): 67890
-  'ほ゜'      // Lesson 13 (Number row, pinky reach): -=
-];
-var CUSTOM_ALPHABETS = {
-  RIGHT_PINKY: 'わほ゜せ゛むへれけろめ',
-  ALL_HIRAGANA: 'あいうえおぁぃぅぇゔ' +
-  'かきくけこがぎぐげご' +
-  'さしすせそざじずぜぞ' +
-  'たちつてとだぢづでどっ' +
-  'なにぬねの' +
-  'はひふへほばびぶべぼぱぴぷぺぽ' +
-  'まみむめも' +
-  'やゆよゃゅょ' +
-  'らりるれろ' +
-  'わを' +
-  'ー',
-  // CURRENT: 'けうぼぅむだぽびど'
-  CURRENT: 'けれうあほ゜とて゛むわ'
-};
-
-
-// ---- OTHER DEFAULTS ----
-
-var fs = require('fs');
-var FILE_NAMES = require('./fileNames');
-var DEFAULT_ALPHABET = CUSTOM_ALPHABETS.ALL_HIRAGANA;
-var NUM_LINES = 5;
-var LINE_LENGTH = 36;
-
-
 // ---- HELPER FUNCTIONS ----
-
-// Returns a string of all characters introduced up to
-// (and including) the current lesson
-var getAlphabetForLesson = function(lessonNumber) {
-  return LESSON_ALPHABETS.slice(0, lessonNumber).join('');
-};
 
 // Returns a random character from an alphabet string
 var getRandomChar = function(alphabet, charNotToMatch) {
@@ -71,20 +21,23 @@ var getRandomChars = function(alphabet, numChars) {
   return result;
 };
 
-
-// ---- MAIN ----
-module.exports = function(alphabetArg) {
+module.exports = function(fs, config, alphabetArg) {
+  // Returns a string of all characters introduced up to
+  // (and including) the current lesson
+  var getAlphabetForLessonNumber = function(lessonNumber) {
+    return config.LESSON_ALPHABETS.slice(0, lessonNumber).join('');
+  };
 
   // Set alphabet
-  var alphabet = DEFAULT_ALPHABET;
+  var alphabet = config.DEFAULT_ALPHABET;
   if (alphabetArg !== undefined) {
-    if (alphabetArg in CUSTOM_ALPHABETS) {
-      alphabet = CUSTOM_ALPHABETS[alphabetArg];
+    if (alphabetArg in config.CUSTOM_ALPHABETS) {
+      alphabet = config.CUSTOM_ALPHABETS[alphabetArg];
       console.log('Using custom alphabet:', alphabetArg);
     } else {
       var lessonNumber = parseInt(alphabetArg);
-      if (lessonNumber >= 1 && lessonNumber <= LESSON_ALPHABETS.length) {
-        alphabet = getAlphabetForLesson(lessonNumber);
+      if (lessonNumber >= 1 && lessonNumber <= config.LESSON_ALPHABETS.length) {
+        alphabet = getAlphabetForLessonNumber(lessonNumber);
         console.log('Using alphabet for lesson:', lessonNumber)
       } else {
         console.log('Invalid alphabet entered, defaulting to ALL_HIRAGANA alphabet');
@@ -96,12 +49,12 @@ module.exports = function(alphabetArg) {
 
   // Generate random output
   var output = [];
-  for (var i = 0; i < NUM_LINES; i++) {
-    output.push(getRandomChars(alphabet, LINE_LENGTH));
+  for (var i = 0; i < config.NUM_LINES; i++) {
+    output.push(getRandomChars(alphabet, config.LINE_LENGTH));
   }
   output = output.join('\n\n\n');
   output += '\n';
 
   // Write to file
-  fs.writeFileSync(FILE_NAMES.TYPING_PRACTICE, output);
+  fs.writeFileSync(config.OUTPUT_FILE_NAME, output);
 };
