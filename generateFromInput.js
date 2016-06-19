@@ -22,6 +22,11 @@ module.exports = function(fs, config) {
   var disallowed = stringToHash(config.DISALLOWED);
   var converter = stringToHash(config.CONVERT_FROM, config.CONVERT_TO);
   
+  // Create input file if necessary
+  if (!fs.existsSync(config.INPUT_FILE_NAME)) {
+    fs.writeFileSync(config.INPUT_FILE_NAME, '');
+  };
+
   // Remove and convert characters in input
   // Stop once desired output size has been reached
   var contents = fs.readFileSync(config.INPUT_FILE_NAME, 'utf-8');
