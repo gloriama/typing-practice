@@ -2,43 +2,29 @@
 // Japanese kana input keyboard
 
 var INPUT_FILE_NAME = 'CONVERTER_INPUT.txt';
-var OUTPUT_FILE_NAME = 'CONVERTER_OUTPUT.txt';
+var OUTPUT_FILE_NAME = 'TYPINGPRACTICE.txt';
 
-var stringToSet = function(str) {
-  return str.split('').reduce(function(acc, char) {
-    acc[char] = true;
+var stringToHash = function(keys, values) {
+  // keys and values are both strings of characters
+  // must be the same length
+
+  // if values string is not given, all values default
+  // to true
+
+  return keys.split('').reduce(function(acc, char) {
+    acc[char] = values ? values[char] : true;
     return acc;
   }, {});
 };
 
-var disallowedChars = '\n';
-disallowedChars = stringToSet(disallowedChars);
-var converter = {
-  '『': '',
-  '』': '',
-  '[': '［',
-  ']': '］',
-  '1': '１',
-  '2': '２',
-  '3': '３',
-  '4': '４',
-  '5': '５',
-  '6': '６',
-  '7': '７',
-  '8': '８',
-  '9': '９',
-  '0': '０',
-  '!': '！',
-  '@': '＠',
-  '#': '＃',
-  '$': '＄',
-  '%': '％',
-  '^': '＾',
-  '&': '＆',
-  '*': '＊',
-  '(': '（',
-  ')': '）',
-};
+// Specify disallowed characters and characters to convert
+var DISALLOWED = '\n';
+var CONVERT_FROM = '『』[]1234567890!@#$%^&*()';
+var CONVERT_TO = '「」［］１２３４５６７８９０！＠＃＄％＾＆＊（ ）';
+
+// Convert to hashes
+var disallowed = stringToHash(DISALLOWED);
+var converter = stringToHash(CONVERT_FROM, CONVERT_TO);
 
 var fs = require('fs');
 var contents = fs.readFileSync(INPUT_FILE_NAME, 'utf-8');
@@ -48,13 +34,13 @@ var LINE_LENGTH = 36;
 var numCharsNeeded = NUM_LINES * LINE_LENGTH;
 
 // Remove and/or convert characters as specified in
-//   disallowedChars and converter (see above)
+//   disallowed and converter (see above)
 // Continue until we have numCharsNeeded (or end of input)
 var lines = [];
 var currLine = '';
 for (var i = 0; i < contents.length && lines.length < NUM_LINES; i++) {
   var char = contents[i];
-  if (char in disallowedChars) {
+  if (char in disallowed) {
     continue;
   } else {
     currLine += char in converter ? converter[char] : char;
