@@ -24,9 +24,9 @@ var alphabetChooser = process.argv[3];
 
 // Generate lines
 var lines;
-if (flag === config.RANDOM_FLAG) {
+if (config.RANDOM_FLAGS.indexOf(flag) !== -1) {
   lines = generateRandom(fs, config, alphabetChooser);
-} else if (flag === config.INPUT_FLAG) {
+} else if (config.INPUT_FLAGS.indexOf(flag) !== -1) {
   lines = generateFromInput(fs, config);
 } else {
   console.log('Please supply a valid flag argument:', RANDOM_FLAG, 'or', INPUT_FLAG);

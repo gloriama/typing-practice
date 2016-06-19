@@ -1,6 +1,6 @@
 // Flag names
-exports.RANDOM_FLAG = '--random';
-exports.INPUT_FLAG = '--input';
+exports.RANDOM_FLAGS = [ '--random', '-r' ];
+exports.INPUT_FLAGS = [ '--input', '-i' ];
 
 // File names
 exports.INPUT_FILE_NAME = 'INPUT.txt';
