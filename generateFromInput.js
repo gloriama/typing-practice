@@ -1,8 +1,7 @@
 // Converts input to something typeable in Macbook's
 // Japanese kana input keyboard
 
-var INPUT_FILE_NAME = 'CONVERTER_INPUT.txt';
-var OUTPUT_FILE_NAME = 'TYPINGPRACTICE.txt';
+var FILE_NAMES = require('./fileNames');
 
 var stringToHash = function(keys, values) {
   // keys and values are both strings of characters
@@ -26,7 +25,7 @@ var CONVERT_TO = '１２３４５６７８９０！＠＃＄％＾＆＊（）�
 var disallowed = stringToHash(DISALLOWED);
 var converter = stringToHash(CONVERT_FROM, CONVERT_TO);
 var fs = require('fs');
-var contents = fs.readFileSync(INPUT_FILE_NAME, 'utf-8');
+var contents = fs.readFileSync(FILE_NAMES.INPUT, 'utf-8');
 
 var NUM_LINES = 5;
 var LINE_LENGTH = 36;
@@ -51,10 +50,10 @@ module.exports = function() {
     }
   }
 
-  // Update INPUT_FILE_NAME to be the remaining input
+  // Update FILE_NAMES.INPUT to be the remaining input
   var remainingInput = contents.slice(i);
   fs.writeFileSync(FILE_NAMES.INPUT, remainingInput);
 
-  // Write output to OUTPUT_FILE_NAME
-  fs.writeFileSync(OUTPUT_FILE_NAME, lines.join('\n\n'));
+  // Write output to FILE_NAMES.TYPING_PRACTICE
+  fs.writeFileSync(FILE_NAMES.TYPING_PRACTICE, lines.join('\n\n'));
 };
