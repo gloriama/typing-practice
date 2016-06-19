@@ -73,34 +73,35 @@ var getRandomChars = function(alphabet, numChars) {
 
 
 // ---- MAIN ----
+module.exports = function(alphabetArg) {
 
-// Set alphabet, based on input
-var alphabet = DEFAULT_ALPHABET;
-var alphabetArg = process.argv[2];
-if (alphabetArg !== undefined) {
-  if (alphabetArg in CUSTOM_ALPHABETS) {
-    alphabet = CUSTOM_ALPHABETS[alphabetArg];
-    console.log('Using custom alphabet:', alphabetArg);
-  } else {
-    var lessonNumber = parseInt(alphabetArg);
-    if (lessonNumber >= 1 && lessonNumber <= LESSON_ALPHABETS.length) {
-      alphabet = getAlphabetForLesson(lessonNumber);
-      console.log('Using alphabet for lesson:', lessonNumber)
+  // Set alphabet
+  var alphabet = DEFAULT_ALPHABET;
+  if (alphabetArg !== undefined) {
+    if (alphabetArg in CUSTOM_ALPHABETS) {
+      alphabet = CUSTOM_ALPHABETS[alphabetArg];
+      console.log('Using custom alphabet:', alphabetArg);
     } else {
-      console.log('Invalid alphabet entered, defaulting to ALL_HIRAGANA alphabet');
+      var lessonNumber = parseInt(alphabetArg);
+      if (lessonNumber >= 1 && lessonNumber <= LESSON_ALPHABETS.length) {
+        alphabet = getAlphabetForLesson(lessonNumber);
+        console.log('Using alphabet for lesson:', lessonNumber)
+      } else {
+        console.log('Invalid alphabet entered, defaulting to ALL_HIRAGANA alphabet');
+      }
     }
+  } else {
+    console.log('Defaulting to ALL_HIRAGANA alphabet');
   }
-} else {
-  console.log('Defaulting to ALL_HIRAGANA alphabet');
-}
 
-// Generate random output
-var output = [];
-for (var i = 0; i < NUM_LINES; i++) {
-  output.push(getRandomChars(alphabet, LINE_LENGTH));
-}
-output = output.join('\n\n\n');
-output += '\n';
+  // Generate random output
+  var output = [];
+  for (var i = 0; i < NUM_LINES; i++) {
+    output.push(getRandomChars(alphabet, LINE_LENGTH));
+  }
+  output = output.join('\n\n\n');
+  output += '\n';
 
-// Write to file
-fs.writeFileSync(FILE_NAMES.TYPING_PRACTICE, output);
+  // Write to file
+  fs.writeFileSync(FILE_NAMES.TYPING_PRACTICE, output);
+};
