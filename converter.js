@@ -50,13 +50,18 @@ var numCharsNeeded = NUM_LINES * LINE_LENGTH;
 // Remove and/or convert characters as specified in
 //   disallowedChars and converter (see above)
 // Continue until we have numCharsNeeded (or end of input)
-var cleaned = '';
-for (var i = 0; i < contents.length && cleaned.length < numCharsNeeded; i++) {
+var lines = [];
+var currLine = '';
+for (var i = 0; i < contents.length && lines.length < NUM_LINES; i++) {
   var char = contents[i];
   if (char in disallowedChars) {
     continue;
   } else {
-    cleaned += char in converter ? converter[char] : char;
+    currLine += char in converter ? converter[char] : char;
+    if (currLine.length === LINE_LENGTH || i === contents.length - 1) {
+      lines.push(currLine + '\n');
+      currLine = '';
+    }
   }
 }
 
@@ -64,11 +69,5 @@ for (var i = 0; i < contents.length && cleaned.length < numCharsNeeded; i++) {
 var remainingInput = contents.slice(i);
 fs.writeFileSync(INPUT_FILE_NAME, remainingInput);
 
-// Separate cleaned characters into lines
-var lines = [];
-for (var i = 0; i < cleaned.length; i += LINE_LENGTH) {
-  lines.push(cleaned.slice(i, i + LINE_LENGTH) + '\n');
-}
-var output = lines.join('\n\n');
-
-fs.writeFileSync(OUTPUT_FILE_NAME, output);
+// Write output to OUTPUT_FILE_NAME
+fs.writeFileSync(OUTPUT_FILE_NAME, lines.join('\n\n'));
