@@ -20,7 +20,7 @@ node generate [flag] <alphabet-chooser>
 
 * The `alphabet-chooser` argument is **optional**, and it is only relevant when used with the `--random` flag. If included, it can be either of the following:
 
-  * a lesson number: a number from 1~15, to indicate what subset of the full alphabet you want to practice
+  * a lesson number: a number from 1~13, to indicate what subset of the full alphabet you want to practice
   * a custom alphabet name: a key for any custom alphabet you may want to use
 
 ### To practice typing:

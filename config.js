@@ -25,7 +25,7 @@ exports.LESSON_ALPHABETS = [
   '、。・',    // Lesson 10 (Bottom row, RH Shift)
   'ぬふあうえ', // Lesson 11 (Number row, LH): 12345
   'おやゆよわ', // Lesson 12 (Number row, RH): 67890
-  'ほ゜'      // Lesson 13 (Number row, pinky reach): -=
+  'ほ゜'       // Lesson 13 (Number row, pinky reach): -=
 ];
 exports.CUSTOM_ALPHABETS = {
   RIGHT_PINKY: 'わほ゜せ゛むへれけろめ',
