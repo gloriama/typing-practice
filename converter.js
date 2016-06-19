@@ -65,12 +65,10 @@ var remainingInput = contents.slice(i);
 fs.writeFileSync(INPUT_FILE_NAME, remainingInput);
 
 // Separate cleaned characters into lines
-var output = '';
+var lines = [];
 for (var i = 0; i < cleaned.length; i += LINE_LENGTH) {
-  output += cleaned.slice(i, i + LINE_LENGTH) + '\n\n\n';
+  lines.push(cleaned.slice(i, i + LINE_LENGTH) + '\n');
 }
-
-// Remove final newline
-output = output.slice(0, output.length - 1);
+var output = lines.join('\n\n');
 
 fs.writeFileSync(OUTPUT_FILE_NAME, output);
