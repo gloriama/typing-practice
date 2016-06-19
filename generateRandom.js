@@ -48,13 +48,9 @@ module.exports = function(fs, config, alphabetArg) {
   }
 
   // Generate random output
-  var output = [];
+  var lines = [];
   for (var i = 0; i < config.NUM_LINES; i++) {
-    output.push(getRandomChars(alphabet, config.LINE_LENGTH));
+    lines.push(getRandomChars(alphabet, config.LINE_LENGTH));
   }
-  output = output.join('\n\n\n');
-  output += '\n';
-
-  // Write to file
-  fs.writeFileSync(config.OUTPUT_FILE_NAME, output);
+  return lines;
 };

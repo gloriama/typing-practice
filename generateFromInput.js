@@ -39,7 +39,7 @@ module.exports = function(fs, config) {
     } else {
       currLine += char in converter ? converter[char] : char;
       if (currLine.length === config.LINE_LENGTH || i === contents.length - 1) {
-        lines.push(currLine + '\n');
+        lines.push(currLine);
         currLine = '';
       }
     }
@@ -48,7 +48,9 @@ module.exports = function(fs, config) {
   // Update input file to be the remaining input
   var remainingInput = contents.slice(i);
   fs.writeFileSync(config.INPUT_FILE_NAME, remainingInput);
+  if (i === contents.length) {
+    console.log('WARNING: Input file empty. Add more text to \'' + config.INPUT_FILE_NAME + '\'');
+  }
 
-  // Write output to output file
-  fs.writeFileSync(config.OUTPUT_FILE_NAME, lines.join('\n\n'));
+  return lines;
 };
