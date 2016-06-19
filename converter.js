@@ -43,20 +43,29 @@ var converter = {
 var fs = require('fs');
 var contents = fs.readFileSync(INPUT_FILE_NAME, 'utf-8');
 
-// Remove and/or convert characters as specified in
-// disallowedChars and converter (see above)
-var cleaned = contents.split('').map(function(char) {
-  if (char in disallowedChars) {
-    return '';
-  } else {
-    return (char in converter) ? converter[char] : char;
-  }
-}).join('');
-
-// Standardize cleaned characters into 36-char chunks
+var NUM_LINES = 5;
 var LINE_LENGTH = 36;
-var output = '';
+var numCharsNeeded = NUM_LINES * LINE_LENGTH;
 
+// Remove and/or convert characters as specified in
+//   disallowedChars and converter (see above)
+// Continue until we have numCharsNeeded (or end of input)
+var cleaned = '';
+for (var i = 0; i < contents.length && cleaned.length < numCharsNeeded; i++) {
+  var char = contents[i];
+  if (char in disallowedChars) {
+    continue;
+  } else {
+    cleaned += char in converter ? converter[char] : char;
+  }
+}
+
+// Update INPUT_FILE_NAME to be the remaining input
+var remainingInput = contents.slice(i);
+fs.writeFileSync(INPUT_FILE_NAME, remainingInput);
+
+// Separate cleaned characters into lines
+var output = '';
 for (var i = 0; i < cleaned.length; i += LINE_LENGTH) {
   output += cleaned.slice(i, i + LINE_LENGTH) + '\n\n\n';
 }
