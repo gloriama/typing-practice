@@ -45,8 +45,12 @@ exports.CUSTOM_ALPHABETS = {
 };
 exports.DEFAULT_ALPHABET = exports.CUSTOM_ALPHABETS.ALL_HIRAGANA;
 exports.DISALLOWED = '\n＝'; // note: \n MUST be in this string
-exports.CONVERT_FROM = '1234567890!@#$%^&*()『』[]【】`~～…';
-exports.CONVERT_TO = '１２３４５６７８９０！＠＃＄％＾＆＊（）「」［］［］｀〜〜　';
+exports.CONVERT_FROM =
+  '1234567890!@#$%^&*()' +
+  '『』[]【】{}`;\',./~～_|:"<>?… ';
+exports.CONVERT_TO =
+  '１２３４５６７８９０！＠＃＄％＾＆＊（）' +
+  '「」［］［］｛｝｀；’，．／〜〜＿｜：”＜＞？　　';
 
 // Miscellaneous
 exports.MAX_NUM_MISTAKES = 15;
