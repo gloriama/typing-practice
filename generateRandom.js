@@ -29,7 +29,7 @@ module.exports = function(fs, config, alphabetArg) {
   };
 
   // Set alphabet
-  var alphabet = config.DEFAULT_ALPHABET;
+  var alphabet = config.CUSTOM_ALPHABETS[config.DEFAULT_ALPHABET_KEY];
   if (alphabetArg !== undefined) {
     if (alphabetArg in config.CUSTOM_ALPHABETS) {
       alphabet = config.CUSTOM_ALPHABETS[alphabetArg];
@@ -38,13 +38,14 @@ module.exports = function(fs, config, alphabetArg) {
       var lessonNumber = parseInt(alphabetArg);
       if (lessonNumber >= 1 && lessonNumber <= config.LESSON_ALPHABETS.length) {
         alphabet = getAlphabetForLessonNumber(lessonNumber);
-        console.log('Using alphabet for lesson:', lessonNumber)
+        console.log('Using alphabet for lesson number:', lessonNumber)
       } else {
-        console.log('Invalid alphabet entered, defaulting to ALL_HIRAGANA alphabet');
+        console.log('WARNING: Invalid alphabet-chooser argument');
+        console.log('Using default alphabet:', config.DEFAULT_ALPHABET_KEY);
       }
     }
   } else {
-    console.log('Defaulting to ALL_HIRAGANA alphabet');
+    console.log('Using default alphabet:', config.DEFAULT_ALPHABET_KEY);
   }
 
   // Generate random output

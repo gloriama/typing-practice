@@ -40,10 +40,9 @@ exports.CUSTOM_ALPHABETS = {
   'らりるれろ' +
   'わを' +
   'ー',
-  // CURRENT: 'けうぼぅむだぽびど'
   CURRENT: 'けれうあほ゜とて゛むわ'
 };
-exports.DEFAULT_ALPHABET = exports.CUSTOM_ALPHABETS.ALL_HIRAGANA;
+exports.DEFAULT_ALPHABET_KEY = 'ALL_HIRAGANA';
 exports.DISALLOWED = '\n＝'; // note: \n MUST be in this string
 exports.CONVERT_FROM =
   '1234567890!@#$%^&*()' +
