@@ -29,7 +29,7 @@ if (config.RANDOM_FLAGS.indexOf(flag) !== -1) {
 } else if (config.INPUT_FLAGS.indexOf(flag) !== -1) {
   lines = generateFromInput(fs, config);
 } else {
-  console.log('Please supply a valid flag argument:', RANDOM_FLAG, 'or', INPUT_FLAG);
+  console.log('Please supply a valid flag argument:', config.RANDOM_FLAGS[0], 'or', config.INPUT_FLAGS[0]);
   return;
 }
 
