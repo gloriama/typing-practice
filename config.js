@@ -28,7 +28,6 @@ exports.LESSON_ALPHABETS = [
   'ほ゜'       // Lesson 13 (Number row, pinky reach): -=
 ];
 exports.CUSTOM_ALPHABETS = {
-  RIGHT_PINKY: 'わほ゜せ゛むへれけろめ',
   ALL_HIRAGANA: 'あいうえおぁぃぅぇゔ' +
   'かきくけこがぎぐげご' +
   'さしすせそざじずぜぞ' +
@@ -40,16 +39,20 @@ exports.CUSTOM_ALPHABETS = {
   'らりるれろ' +
   'わを' +
   'ー',
-  CURRENT: 'けれうあほ゜とて゛むわ'
+  CURRENT: 'けれうあほ゜とて゛むわ',
+  INDEX_FINGERS: 'うすはひえかきこおんくみやなまも',
+  MIDDLE_RING: 'ふてとさあいしそゆにのねよらりる',
+  RIGHT_PINKY: 'わせれめほけろぜぼげ',
+  RUSSIAN: 'фываолджпрэйцукенгшщзхъёячсмитьбю'
 };
 exports.DEFAULT_ALPHABET_KEY = 'ALL_HIRAGANA';
-exports.DISALLOWED = '\n＝'; // note: \n MUST be in this string
+exports.DISALLOWED = '\n＝■'; // note: \n MUST be in this string
 exports.CONVERT_FROM =
   '1234567890!@#$%^&*()' +
-  '『』[]【】{}`;\',./~～_|:"<>?… ';
+  '『』[]【】{}`-―;\',./~～_|:"“<>?… ☓';
 exports.CONVERT_TO =
   '１２３４５６７８９０！＠＃＄％＾＆＊（）' +
-  '「」［］［］｛｝｀；’，．／〜〜＿｜：”＜＞？　　';
+  '「」［］［］｛｝｀ーー；’，．／〜〜＿｜：””＜＞？　　ｘ';
 
 // Miscellaneous
 exports.MAX_NUM_MISTAKES = 15;
